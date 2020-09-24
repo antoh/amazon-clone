@@ -1,4 +1,5 @@
-import React from "react";
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import CheckoutProduct from "./CheckoutProduct";
 import "./Payment.css";
@@ -6,6 +7,23 @@ import { useStateValue } from "./StateProvider";
 
 function Payment() {
   const [{ basket, user }, dispatch] = useStateValue();
+
+  const stripe = useStripe();
+  const elements = useElements();
+
+  const [error, setError] = useState(null);
+  const [disabled, setDisabled] = useState(true);
+
+  const handleSubmit = (e) => {
+    //Stripe stuff
+  };
+  const handleChange = (e) => {
+    //listen for changes in CardElement
+    //and display any errors as the customer type their details
+    setDisabled(e.empty);
+    setError(e.rror ? e.error.message : "");
+  };
+
   return (
     <div className="payment">
       <div className="payment__container">
@@ -46,7 +64,12 @@ function Payment() {
           <div className="payment__title">
             <h3>Payment Method</h3>
           </div>
-          <div className="payment__details"></div>
+          <div className="payment__details">
+            {/* Stripe Details will */}
+            <form onSubmit={handleSubmit}>
+              <CardElement onChange={handleChange} />
+            </form>
+          </div>
         </div>
       </div>
       <h1>I am payment component</h1>

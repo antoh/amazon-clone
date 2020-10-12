@@ -6,6 +6,7 @@ import Checkout from "./Checkout";
 import Payment from "./Payment";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./Login";
+import Orders from "./Orders";
 import { auth } from "./firebase";
 import { useStateValue } from "./StateProvider";
 import { loadStripe } from "@stripe/stripe-js";
@@ -38,6 +39,10 @@ function App() {
     <Router>
       <div className="app">
         <Switch>
+          <Route path="/orders">
+            <Header />
+            <Orders />
+          </Route>
           <Route path="/login">
             <Login />
           </Route>
